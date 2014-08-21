@@ -8,6 +8,7 @@
 
 #import "MoviesViewController.h"
 #import "MovieCell.h"
+#import "MovieDetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
 
 @interface MoviesViewController ()
@@ -36,7 +37,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    NSString *url = @"http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey=np4pvukhemwjzckp7geyk7k8";
+    NSString *url = @"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=np4pvukhemwjzckp7geyk7k8";
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -69,6 +70,12 @@
     NSURL *imageUrl = [NSURL URLWithString:movie[@"posters"][@"thumbnail"]];
     [cell.posterView setImageWithURL:imageUrl];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MovieDetailsViewController *vc = [[MovieDetailsViewController alloc] init];
+    vc.movie = self.movies[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
