@@ -12,8 +12,9 @@
 @interface MovieDetailsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *posterView;
-@property (weak, nonatomic) IBOutlet UILabel *runtimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *synopsisLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scroll;
 
 @end
 
@@ -32,12 +33,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.runtimeLabel.text = [NSString stringWithFormat:@"%@ minutes", self.movie[@"runtime"]];
-    self.ratingLabel.text = [NSString stringWithFormat:@"Rated %@", self.movie[@"mpaa_rating"]];
+    self.titleLabel.text = self.movie[@"title"];
+    self.synopsisLabel.text = self.movie[@"synopsis"];
     //Download poster image
     NSString *largeImageUrl = [self.movie[@"posters"][@"original"] stringByReplacingOccurrencesOfString:@"_tmb" withString:@"_ori"];
     NSURL *imageUrl = [NSURL URLWithString:largeImageUrl];
     [self.posterView setImageWithURL:imageUrl];
+    //Size scroll view
+    [self.synopsisLabel sizeToFit];
+    self.scroll.contentSize = CGSizeMake(320, self.synopsisLabel.frame.size.height + 100);
 }
 
 - (void)didReceiveMemoryWarning
