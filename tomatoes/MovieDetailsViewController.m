@@ -41,7 +41,7 @@
     [self.posterView setImageWithURL:imageUrl];
     //Size scroll view
     [self.synopsisLabel sizeToFit];
-    self.scroll.contentSize = CGSizeMake(320, self.synopsisLabel.frame.size.height + 100);
+    self.scroll.contentSize = CGSizeMake(320, self.synopsisLabel.frame.size.height + 200);
 }
 
 - (void)didReceiveMemoryWarning
